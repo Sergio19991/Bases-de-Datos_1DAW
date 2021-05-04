@@ -623,11 +623,49 @@ CREATE TABLE IF NOT EXISTS `contacto` (
   `telefono` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.contacto: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.contacto: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `contacto` DISABLE KEYS */;
 INSERT INTO `contacto` (`email`, `telefono`) VALUES
 	('Sergio1001@España.com', '658077873');
 /*!40000 ALTER TABLE `contacto` ENABLE KEYS */;
+
+-- Volcando estructura para procedimiento proyecto.cursor1__proyecto
+DELIMITER //
+CREATE PROCEDURE `cursor1__proyecto`()
+BEGIN
+
+	DECLARE final INTEGER DEFAULT 0;
+	DECLARE `nombre` VARCHAR(25) DEFAULT "";
+	DECLARE fichaContactos BLOB DEFAULT "";
+	
+	DECLARE `datos_nombre` CURSOR FOR
+	SELECT CONCAT(pilotos.nombre, " ", pilotos.apellidos)
+	FROM pilotos;	
+	
+	DECLARE CONTINUE handler
+	FOR NOT FOUND SET final = 1;
+	
+	OPEN `datos_nombre`;
+		
+	datos : loop
+	
+		fetch `datos_nombre` INTO `nombre`;
+		
+		if final = 1 then
+			leave datos;
+		END if;
+		
+		SET fichaContactos = CONCAT("\n", " NOMBRE: ", `nombre`,"\n" , " DNI: ", CONCAT(ROUND(RAND()*(900000000-100000000)+100000000), CHAR(FLOOR(RAND()*26)+65)), "\n", fichaContactos);
+		
+	END loop datos;
+	
+	close `datos_nombre`;
+	
+	SELECT fichaContactos FROM DUAL;
+	
+
+END//
+DELIMITER ;
 
 -- Volcando estructura para función proyecto.funcion1__proyecto
 DELIMITER //
@@ -687,7 +725,7 @@ CREATE TABLE IF NOT EXISTS `menor_edad` (
   `momentoIntroduccion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.menor_edad: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.menor_edad: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `menor_edad` DISABLE KEYS */;
 INSERT INTO `menor_edad` (`codigoPiloto`, `nacimiento`, `momentoIntroduccion`) VALUES
 	(22, '2010-06-21', '2021-04-24 15:16:20');
