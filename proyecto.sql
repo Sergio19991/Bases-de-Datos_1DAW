@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `circuitos` (
   PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.circuitos: ~51 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.circuitos: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `circuitos` DISABLE KEYS */;
 INSERT INTO `circuitos` (`codigo`, `nombre`, `localizacion`, `longitud`) VALUES
 	(1, 'Autodromo Nazionale Monza (Road Course)', 'Italy', 5.794),
@@ -636,30 +636,38 @@ BEGIN
 
 	DECLARE final INTEGER DEFAULT 0;
 	DECLARE `nombre` VARCHAR(25) DEFAULT "";
-	DECLARE fichaContactos BLOB DEFAULT "";
+	DECLARE `correoElectronico` VARCHAR(150) DEFAULT "";
+	DECLARE fichaContactos TEXT DEFAULT "";
 	
 	DECLARE `datos_nombre` CURSOR FOR
 	SELECT CONCAT(pilotos.nombre, " ", pilotos.apellidos)
-	FROM pilotos;	
+	FROM pilotos;
+	
+	DECLARE `datos_correoElectronico` CURSOR FOR
+	SELECT CONCAT(LOWER(pilotos.nombre), LOWER(pilotos.apellidos), "@proyecto.db")
+	FROM pilotos;
 	
 	DECLARE CONTINUE handler
 	FOR NOT FOUND SET final = 1;
 	
 	OPEN `datos_nombre`;
+	OPEN `datos_correoElectronico`;
 		
 	datos : loop
 	
 		fetch `datos_nombre` INTO `nombre`;
+		fetch `datos_correoElectronico` INTO `correoElectronico`;
 		
 		if final = 1 then
 			leave datos;
 		END if;
 		
-		SET fichaContactos = CONCAT("\n", " NOMBRE: ", `nombre`,"\n" , " DNI: ", CONCAT(ROUND(RAND()*(900000000-100000000)+100000000), CHAR(FLOOR(RAND()*26)+65)), "\n", fichaContactos);
+		SET fichaContactos = CONCAT("\n", `nombre`, "\n", CONCAT(ROUND(RAND()*(99999999-10000000)+10000000), CHAR(FLOOR(RAND()*26)+65)), "\n", `correoElectronico`, "\n", FLOOR(600000000 + RAND() * (700000000 - 600000000)), "\n", fichaContactos);
 		
 	END loop datos;
 	
 	close `datos_nombre`;
+	close `datos_correoElectronico`;
 	
 	SELECT fichaContactos FROM DUAL;
 	
@@ -1795,7 +1803,7 @@ CREATE TABLE IF NOT EXISTS `pruebas` (
   PRIMARY KEY (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.pruebas: ~10 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.pruebas: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `pruebas` DISABLE KEYS */;
 INSERT INTO `pruebas` (`tipo`, `descripcion`) VALUES
 	('Autocross', 'Hay que recorrer una tramo de pista complicado en el menor tiempo posible. Ganará el coche que logre cruzar la línea de meta en el menor tiempo posible.'),
@@ -1831,7 +1839,7 @@ CREATE TABLE IF NOT EXISTS `resultados` (
   CONSTRAINT `fk_resultados_pruebas1` FOREIGN KEY (`prueba`) REFERENCES `pruebas` (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.resultados: ~1.002 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.resultados: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `resultados` DISABLE KEYS */;
 INSERT INTO `resultados` (`fecha`, `piloto`, `coche`, `prueba`, `circuito`, `mejor_tiempo`, `posicion`, `recompensa`) VALUES
 	('2018-04-17', 761, 308, 'Copa', 25, '00:02:12', 1, 3000),
