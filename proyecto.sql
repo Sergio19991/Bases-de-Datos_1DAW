@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         8.0.22 - MySQL Community Server - GPL
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             11.2.0.6255
+-- HeidiSQL Versión:             11.2.0.6277
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `circuitos` (
   PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.circuitos: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.circuitos: ~51 rows (aproximadamente)
 /*!40000 ALTER TABLE `circuitos` DISABLE KEYS */;
 INSERT INTO `circuitos` (`codigo`, `nombre`, `localizacion`, `longitud`) VALUES
 	(1, 'Autodromo Nazionale Monza (Road Course)', 'Italy', 5.794),
@@ -623,7 +623,7 @@ CREATE TABLE IF NOT EXISTS `contacto` (
   `telefono` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.contacto: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.contacto: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `contacto` DISABLE KEYS */;
 INSERT INTO `contacto` (`email`, `telefono`) VALUES
 	('Sergio1001@España.com', '658077873');
@@ -662,7 +662,7 @@ BEGIN
 			leave datos;
 		END if;
 		
-		SET fichaContactos = CONCAT("\n", `nombre`, "\n", CONCAT(ROUND(RAND()*(99999999-10000000)+10000000), CHAR(FLOOR(RAND()*26)+65)), "\n", `correoElectronico`, "\n", FLOOR(600000000 + RAND() * (700000000 - 600000000)), "\n", fichaContactos);
+		SET fichaContactos = CONCAT("\n", `nombre`, "\n", CONCAT(ROUND(RAND()*(90000000-10000000)+10000000), CHAR(FLOOR(RAND()*26)+65)), "\n", `correoElectronico`, "\n", FLOOR(600000000 + RAND() * (700000000 - 600000000)), "\n", fichaContactos);
 		
 	END loop datos;
 	
@@ -733,7 +733,7 @@ CREATE TABLE IF NOT EXISTS `menor_edad` (
   `momentoIntroduccion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.menor_edad: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.menor_edad: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `menor_edad` DISABLE KEYS */;
 INSERT INTO `menor_edad` (`codigoPiloto`, `nacimiento`, `momentoIntroduccion`) VALUES
 	(22, '2010-06-21', '2021-04-24 15:16:20');
@@ -1803,7 +1803,7 @@ CREATE TABLE IF NOT EXISTS `pruebas` (
   PRIMARY KEY (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.pruebas: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.pruebas: ~10 rows (aproximadamente)
 /*!40000 ALTER TABLE `pruebas` DISABLE KEYS */;
 INSERT INTO `pruebas` (`tipo`, `descripcion`) VALUES
 	('Autocross', 'Hay que recorrer una tramo de pista complicado en el menor tiempo posible. Ganará el coche que logre cruzar la línea de meta en el menor tiempo posible.'),
@@ -1839,7 +1839,7 @@ CREATE TABLE IF NOT EXISTS `resultados` (
   CONSTRAINT `fk_resultados_pruebas1` FOREIGN KEY (`prueba`) REFERENCES `pruebas` (`tipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla proyecto.resultados: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla proyecto.resultados: ~1.002 rows (aproximadamente)
 /*!40000 ALTER TABLE `resultados` DISABLE KEYS */;
 INSERT INTO `resultados` (`fecha`, `piloto`, `coche`, `prueba`, `circuito`, `mejor_tiempo`, `posicion`, `recompensa`) VALUES
 	('2018-04-17', 761, 308, 'Copa', 25, '00:02:12', 1, 3000),
