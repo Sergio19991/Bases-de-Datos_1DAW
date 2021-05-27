@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         8.0.22 - MySQL Community Server - GPL
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             11.2.0.6277
+-- HeidiSQL Versión:             11.2.0.6290
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -644,7 +644,7 @@ BEGIN
 	FROM pilotos;
 	
 	DECLARE `datos_correoElectronico` CURSOR FOR
-	SELECT CONCAT(LOWER(pilotos.nombre), LOWER(pilotos.apellidos), "@proyecto.db")
+	SELECT CONCAT(LOWER(pilotos.nombre), LOWER(pilotos.apellidos), "@proyecto.sba")
 	FROM pilotos;
 	
 	DECLARE CONTINUE handler
@@ -674,6 +674,81 @@ BEGIN
 
 END//
 DELIMITER ;
+
+-- Volcando estructura para tabla proyecto.equipo
+CREATE TABLE IF NOT EXISTS `equipo` (
+  `numEquipo` varchar(3) NOT NULL,
+  `nomEquipo` varchar(36) NOT NULL,
+  `numdirec` varchar(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla proyecto.equipo: ~63 rows (aproximadamente)
+/*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
+INSERT INTO `equipo` (`numEquipo`, `nomEquipo`, `numdirec`) VALUES
+	('A00', 'GUILLENA C.F', '10'),
+	('B01', 'TOR DEL REY DE PILAS', '20'),
+	('C01', 'TOMARES', '30'),
+	('D01', 'REAL BETIS', ''),
+	('D11', 'CASTILLEJA C.F', '60'),
+	('D21', 'U.D. SANTIPONCE', '70'),
+	('E01', 'J.D. GINES', '50'),
+	('E11', 'SEVILLA F.C.', '90'),
+	('E21', 'MAIRENA DEL ALJARAFE', '100'),
+	('A00', 'GUILLENA C.F', '10'),
+	('B01', 'TOR DEL REY DE PILAS', '20'),
+	('C01', 'TOMARES', '30'),
+	('D01', 'REAL BETIS', ''),
+	('D11', 'CASTILLEJA C.F', '60'),
+	('D21', 'U.D. SANTIPONCE', '70'),
+	('E01', 'J.D. GINES', '50'),
+	('E11', 'SEVILLA F.C.', '90'),
+	('E21', 'MAIRENA DEL ALJARAFE', '100'),
+	('A00', 'GUILLENA C.F', '10'),
+	('B01', 'TOR DEL REY DE PILAS', '20'),
+	('C01', 'TOMARES', '30'),
+	('D01', 'REAL BETIS', ''),
+	('D11', 'CASTILLEJA C.F', '60'),
+	('D21', 'U.D. SANTIPONCE', '70'),
+	('E01', 'J.D. GINES', '50'),
+	('E11', 'SEVILLA F.C.', '90'),
+	('E21', 'MAIRENA DEL ALJARAFE', '100'),
+	('A00', 'GUILLENA C.F', '10'),
+	('B01', 'TOR DEL REY DE PILAS', '20'),
+	('C01', 'TOMARES', '30'),
+	('D01', 'REAL BETIS', ''),
+	('D11', 'CASTILLEJA C.F', '60'),
+	('D21', 'U.D. SANTIPONCE', '70'),
+	('E01', 'J.D. GINES', '50'),
+	('E11', 'SEVILLA F.C.', '90'),
+	('E21', 'MAIRENA DEL ALJARAFE', '100'),
+	('A00', 'GUILLENA C.F', '10'),
+	('B01', 'TOR DEL REY DE PILAS', '20'),
+	('C01', 'TOMARES', '30'),
+	('D01', 'REAL BETIS', ''),
+	('D11', 'CASTILLEJA C.F', '60'),
+	('D21', 'U.D. SANTIPONCE', '70'),
+	('E01', 'J.D. GINES', '50'),
+	('E11', 'SEVILLA F.C.', '90'),
+	('E21', 'MAIRENA DEL ALJARAFE', '100'),
+	('A00', 'GUILLENA C.F', '10'),
+	('B01', 'TOR DEL REY DE PILAS', '20'),
+	('C01', 'TOMARES', '30'),
+	('D01', 'REAL BETIS', ''),
+	('D11', 'CASTILLEJA C.F', '60'),
+	('D21', 'U.D. SANTIPONCE', '70'),
+	('E01', 'J.D. GINES', '50'),
+	('E11', 'SEVILLA F.C.', '90'),
+	('E21', 'MAIRENA DEL ALJARAFE', '100'),
+	('A00', 'GUILLENA C.F', '10'),
+	('B01', 'TOR DEL REY DE PILAS', '20'),
+	('C01', 'TOMARES', '30'),
+	('D01', 'REAL BETIS', ''),
+	('D11', 'CASTILLEJA C.F', '60'),
+	('D21', 'U.D. SANTIPONCE', '70'),
+	('E01', 'J.D. GINES', '50'),
+	('E11', 'SEVILLA F.C.', '90'),
+	('E21', 'MAIRENA DEL ALJARAFE', '100');
+/*!40000 ALTER TABLE `equipo` ENABLE KEYS */;
 
 -- Volcando estructura para función proyecto.funcion1__proyecto
 DELIMITER //
@@ -715,7 +790,7 @@ BEGIN
 	INNER JOIN pilotos ON resultados.piloto = pilotos.codigo
 	WHERE resultados.piloto = codigoPiloto;
 	
-	if (posicionPiloto = 1 OR posicionPiloto =  2 OR posicionPiloto = 3) then
+	if (posicionPiloto IN (1, 2, 3)) then
 		SET resultado = 'GANADOR';
 	ELSE
 		SET resultado = 'PERDEDOR';
